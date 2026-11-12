@@ -399,6 +399,8 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 2.5rem;
+      opacity: 1;
+      transition: opacity 0.25s ease;
     }
     .service-card h3 {
       font-family: 'Cormorant Garamond', serif;
@@ -774,9 +776,10 @@
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-    // Horizontal gallery - center scale on any scroll
+    // Horizontal gallery - scale immediately when section enters view
     const hScroll = document.querySelector('.h-scroll');
-    if (hScroll) {
+    const servicesSection = document.querySelector('.services-wrap');
+    if (hScroll && servicesSection) {
       const cards = hScroll.querySelectorAll('.service-card');
       function updateActiveCard() {
         cards.forEach(card => {
@@ -784,9 +787,18 @@
           const center = window.innerWidth / 2;
           const cardCenter = cardRect.left + cardRect.width / 2;
           const dist = Math.abs(center - cardCenter);
-          card.classList.toggle('active', dist < cardRect.width * 0.42);
+          card.classList.toggle('active', dist < cardRect.width * 0.45);
         });
       }
+      const galleryObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(updateActiveCard, 50);
+            updateActiveCard();
+          }
+        });
+      }, { threshold: 0.2 });
+      galleryObserver.observe(servicesSection);
       hScroll.addEventListener('scroll', updateActiveCard, { passive: true });
       window.addEventListener('scroll', updateActiveCard, { passive: true });
       updateActiveCard();
