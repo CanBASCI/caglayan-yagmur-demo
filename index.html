@@ -104,9 +104,9 @@
 
     /* Hero */
     .hero {
-      height: 100vh;
+      height: 100svh;
       height: 100dvh;
-      min-height: 100vh;
+      min-height: 100svh;
       position: relative;
       display: flex;
       align-items: center;
@@ -608,19 +608,17 @@
       progress.style.width = scrolled + '%';
     });
 
-    // Fix hero height for all mobile browsers
-    function setHeroHeight() {
+    // Gentle hero height fix (only if significantly off)
+    function adjustHero() {
       const hero = document.querySelector('.hero');
-      if (hero) {
-        const h = window.innerHeight;
-        hero.style.height = h + 'px';
-        hero.style.minHeight = h + 'px';
+      if (!hero) return;
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      if (Math.abs(hero.offsetHeight - vh) > 50) {
+        hero.style.height = vh + 'px';
       }
     }
-    setHeroHeight();
-    window.addEventListener('resize', setHeroHeight);
-    window.addEventListener('orientationchange', setHeroHeight);
-    window.addEventListener('load', setHeroHeight);
+    setTimeout(adjustHero, 150);
+    window.addEventListener('resize', adjustHero);
 
     // Nav + logo switch
     const nav = document.getElementById('nav');
