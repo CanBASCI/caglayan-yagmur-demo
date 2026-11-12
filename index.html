@@ -397,21 +397,22 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 42%;
-      background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.75) 40%, transparent 100%);
-      padding: 0 1.8rem 1.5rem;
+      height: 38%;
+      background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.7) 50%, transparent 100%);
+      padding: 0 1.6rem 1.4rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       opacity: 1 !important;
       visibility: visible !important;
       pointer-events: none;
-      z-index: 5;
+      z-index: 10;
     }
     .service-card h3,
     .service-card p {
       opacity: 1 !important;
       visibility: visible !important;
+      color: #fff;
       transform: none !important;
       transition: none !important;
     }
@@ -793,33 +794,24 @@
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-    // Horizontal gallery - image scale only, text never flickers
+    // Horizontal gallery - only scale image, text always visible
     const hScroll = document.querySelector('.h-scroll');
     const servicesSection = document.querySelector('.services-wrap');
     if (hScroll && servicesSection) {
       const cards = hScroll.querySelectorAll('.service-card');
-      let rafId = null;
       function updateActiveCard() {
-        if (rafId) return;
-        rafId = requestAnimationFrame(() => {
-          let closest = null;
-          let minDist = Infinity;
-          cards.forEach(card => {
-            const r = card.getBoundingClientRect();
-            const dist = Math.abs((r.left + r.width / 2) - window.innerWidth / 2);
-            if (dist < minDist) { minDist = dist; closest = card; }
-          });
-          cards.forEach(card => card.classList.toggle('active', card === closest));
-          rafId = null;
+        let closest = null;
+        let minDist = Infinity;
+        cards.forEach(card => {
+          const r = card.getBoundingClientRect();
+          const dist = Math.abs((r.left + r.width / 2) - window.innerWidth / 2);
+          if (dist < minDist) { minDist = dist; closest = card; }
         });
+        cards.forEach(card => card.classList.toggle('active', card === closest));
       }
       hScroll.addEventListener('scroll', updateActiveCard, { passive: true });
       window.addEventListener('scroll', updateActiveCard, { passive: true });
-      const galleryObserver = new IntersectionObserver((entries) => {
-        if (entries.some(e => e.isIntersecting)) updateActiveCard();
-      }, { threshold: 0.05 });
-      galleryObserver.observe(servicesSection);
-      setTimeout(updateActiveCard, 50);
+      setTimeout(updateActiveCard, 100);
     }
 
     // Language switcher
