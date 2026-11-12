@@ -381,18 +381,19 @@
       scroll-snap-align: center;
       position: relative;
       overflow: hidden;
-      border-radius: 6px;
-      isolation: isolate;
+      border-radius: 4px;
+      background: #111;
     }
     .service-card img {
       width: 100%;
       height: 70vh;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform 0.45s ease;
       transform-origin: center center;
+      display: block;
     }
     .service-card.active img {
-      transform: scale(1.08);
+      transform: scale(1.06);
     }
     .service-card .overlay {
       position: absolute;
