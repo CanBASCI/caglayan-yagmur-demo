@@ -384,9 +384,14 @@
       border-radius: 2px;
       background: #0a0a0a;
     }
-    .service-card img {
+    .service-card .img-wrap {
       width: 100%;
       height: 70vh;
+      overflow: hidden;
+    }
+    .service-card img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
       transition: transform 0.4s ease;
@@ -400,22 +405,20 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 38%;
-      background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.7) 50%, transparent 100%);
-      padding: 0 1.6rem 1.4rem;
+      height: 36%;
+      background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.65) 55%, transparent 100%);
+      padding: 0 1.5rem 1.3rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      opacity: 1 !important;
-      visibility: visible !important;
+      z-index: 20;
       pointer-events: none;
-      z-index: 10;
     }
     .service-card h3,
     .service-card p {
+      color: #fff !important;
       opacity: 1 !important;
       visibility: visible !important;
-      color: #fff;
       transform: none !important;
       transition: none !important;
     }
@@ -528,7 +531,7 @@
       .about-img::before { display: none; }
       .values-grid, .steps { grid-template-columns: 1fr 1fr; }
       .service-card { flex: 0 0 78vw; min-width: 280px; }
-      .service-card img { height: 58vh; }
+      .service-card .img-wrap { height: 58vh; }
       .contact-meta { flex-direction: column; gap: 1.2rem; }
       footer { flex-direction: column; gap: 0.6rem; text-align: center; }
     }
@@ -628,24 +631,39 @@
     </div>
     <div class="h-scroll">
       <div class="service-card">
-        <img src="https://caglayanyagmur.com.tr/storage/2026/03/burun-estetigi-rinoplasti-samsun.jpg" alt="Burun Estetiği">
-        <div class="overlay">
-          <h3>Burun Estetiği</h3>
-          <p>Yüz oranlarına uyumlu, doğal görünümlü sonuçlar hedeflenerek kişiye özel rinoplasti planlaması.</p>
+        <div class="img-wrap">
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&q=80" alt="Yüz Estetiği">
         </div>
-      </div>
-      <div class="service-card">
-        <img src="https://caglayanyagmur.com.tr/storage/2026/03/meme-estetigi.jpg" alt="Meme Estetiği">
-        <div class="overlay">
-          <h3>Meme Estetiği</h3>
-          <p>Büyütme, küçültme ve dikleştirme ile beden oranlarına uyumlu estetik form.</p>
-        </div>
-      </div>
-      <div class="service-card">
-        <img src="https://caglayanyagmur.com.tr/storage/2026/04/yuz-estetigi-samsun.jpg" alt="Yüz Estetiği">
         <div class="overlay">
           <h3>Yüz Estetiği</h3>
-          <p>Göz kapağı ve yüz estetiğinde dinlenmiş, dengeli ve doğal görünüm.</p>
+          <p>Göz kapağı ve yüz gençleştirmede daha dinlenmiş, dengeli ve doğal bir görünüm.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="img-wrap">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1200&q=80" alt="Meme Estetiği">
+        </div>
+        <div class="overlay">
+          <h3>Meme Estetiği</h3>
+          <p>Büyütme, küçültme ve dikleştirme ile beden oranlarına uyumlu, estetik form.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="img-wrap">
+          <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1200&q=80" alt="Burun Estetiği">
+        </div>
+        <div class="overlay">
+          <h3>Burun Estetiği</h3>
+          <p>Yüz oranlarına uyumlu, doğal görünümlü rinoplasti. Güvenli operasyon ve konforlu iyileşme.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="img-wrap">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1200&q=80" alt="Vücut Estetiği">
+        </div>
+        <div class="overlay">
+          <h3>Vücut Estetiği</h3>
+          <p>Liposuction, karın germe ve kontur düzenleme ile orantılı siluet.</p>
         </div>
       </div>
     </div>
