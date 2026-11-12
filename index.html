@@ -104,7 +104,6 @@
       height: 100vh;
       height: 100dvh;
       min-height: 100vh;
-      min-height: 100dvh;
       position: relative;
       display: flex;
       align-items: flex-end;
@@ -307,21 +306,26 @@
     }
     .h-scroll::-webkit-scrollbar { display: none; }
     .service-card {
-      flex: 0 0 38vw;
-      min-width: 340px;
+      flex: 0 0 42vw;
+      min-width: 300px;
       scroll-snap-align: center;
       position: relative;
       overflow: hidden;
-      border-radius: 4px;
+      border-radius: 6px;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .service-card img {
       width: 100%;
-      height: 72vh;
+      height: 70vh;
       object-fit: cover;
-      transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s;
+      transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s;
       will-change: transform;
     }
-    .service-card:hover img { transform: scale(1.12); filter: brightness(1.05); }
+    .service-card:hover img,
+    .service-card.active img {
+      transform: scale(1.08);
+      filter: brightness(1.08);
+    }
     .service-card .overlay {
       position: absolute;
       inset: 0;
@@ -601,15 +605,25 @@
       progress.style.width = scrolled + '%';
     });
 
-    // Nav + logo switch (more reliable)
+    // Fix hero height for mobile browsers (iOS Safari address bar)
+    function setHeroHeight() {
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        hero.style.height = window.innerHeight + 'px';
+      }
+    }
+    setHeroHeight();
+    window.addEventListener('resize', setHeroHeight);
+    window.addEventListener('orientationchange', setHeroHeight);
+
+    // Nav + logo switch
     const nav = document.getElementById('nav');
     function updateNav() {
-      const scrolled = window.scrollY > 40;
+      const scrolled = window.scrollY > 30;
       nav.classList.toggle('scrolled', scrolled);
     }
     updateNav();
     window.addEventListener('scroll', updateNav, { passive: true });
-    window.addEventListener('resize', updateNav);
 
     // Hero zoom on scroll
     const heroBg = document.querySelector('.hero-bg');
@@ -642,16 +656,25 @@
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-    // Horizontal scroll driven by vertical
+    // Horizontal gallery more cinematic
     const hScroll = document.querySelector('.h-scroll');
     if (hScroll) {
+      const cards = hScroll.querySelectorAll('.service-card');
       window.addEventListener('scroll', () => {
         const rect = hScroll.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.2) {
-          const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.6 - rect.top) / (window.innerHeight * 0.8)));
-          hScroll.scrollLeft = progress * (hScroll.scrollWidth - hScroll.clientWidth);
+        if (rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.15) {
+          const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.55 - rect.top) / (window.innerHeight * 0.9)));
+          hScroll.scrollLeft = progress * (hScroll.scrollWidth - hScroll.clientWidth) * 1.15;
         }
-      });
+        // Highlight center card
+        cards.forEach(card => {
+          const cardRect = card.getBoundingClientRect();
+          const center = window.innerWidth / 2;
+          const cardCenter = cardRect.left + cardRect.width / 2;
+          const dist = Math.abs(center - cardCenter);
+          card.classList.toggle('active', dist < cardRect.width * 0.4);
+        });
+      }, { passive: true });
     }
   </script>
 </body>
