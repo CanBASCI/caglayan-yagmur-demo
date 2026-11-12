@@ -391,24 +391,30 @@
       transform-origin: center center;
     }
     .service-card.active img {
-      transform: scale(1.12);
+      transform: scale(1.1);
     }
     .service-card .overlay {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.8) 100%);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 2.5rem;
+      padding: 2.2rem 2.5rem;
       opacity: 1 !important;
+      visibility: visible !important;
       pointer-events: none;
-      z-index: 2;
+      z-index: 5;
+      transform: none !important;
     }
     .service-card h3,
     .service-card p {
       opacity: 1 !important;
+      visibility: visible !important;
       transform: none !important;
+      transition: none !important;
     }
     .service-card h3 {
       font-family: 'Cormorant Garamond', serif;
@@ -792,7 +798,7 @@
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-    // Horizontal gallery - scale image only, text always visible
+    // Horizontal gallery - scale image only, text locked visible
     const hScroll = document.querySelector('.h-scroll');
     const servicesSection = document.querySelector('.services-wrap');
     if (hScroll && servicesSection) {
@@ -810,17 +816,24 @@
             closest = card;
           }
         });
-        cards.forEach(card => card.classList.toggle('active', card === closest));
+        cards.forEach(card => {
+          card.classList.toggle('active', card === closest);
+          const overlay = card.querySelector('.overlay');
+          if (overlay) {
+            overlay.style.opacity = '1';
+            overlay.style.visibility = 'visible';
+          }
+        });
       }
       const galleryObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) updateActiveCard();
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.1 });
       galleryObserver.observe(servicesSection);
       hScroll.addEventListener('scroll', updateActiveCard, { passive: true });
       window.addEventListener('scroll', updateActiveCard, { passive: true });
-      setTimeout(updateActiveCard, 100);
+      setTimeout(updateActiveCard, 80);
     }
 
     // Language switcher
