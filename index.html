@@ -380,7 +380,6 @@
       min-width: 300px;
       scroll-snap-align: center;
       position: relative;
-      overflow: hidden;
       border-radius: 2px;
       background: #0a0a0a;
     }
@@ -388,39 +387,39 @@
       width: 100%;
       height: 70vh;
       overflow: hidden;
+      border-radius: 2px;
     }
     .service-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.4s ease;
+      transition: transform 0.45s ease;
       transform-origin: center center;
     }
     .service-card.active img {
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
     .service-card .overlay {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
-      height: 36%;
-      background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.65) 55%, transparent 100%);
-      padding: 0 1.5rem 1.3rem;
+      height: 34%;
+      background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.55) 55%, transparent 100%);
+      padding: 0 1.4rem 1.2rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      z-index: 20;
+      z-index: 40;
       pointer-events: none;
+      transform: translateZ(0);
     }
     .service-card h3,
     .service-card p {
       color: #fff !important;
       opacity: 1 !important;
       visibility: visible !important;
-      transform: none !important;
-      transition: none !important;
     }
     .service-card h3 {
       font-family: 'Cormorant Garamond', serif;
@@ -820,10 +819,9 @@
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-    // Horizontal gallery - only scale image, text always visible
+    // Horizontal gallery - scale image only, text stays fixed
     const hScroll = document.querySelector('.h-scroll');
-    const servicesSection = document.querySelector('.services-wrap');
-    if (hScroll && servicesSection) {
+    if (hScroll) {
       const cards = hScroll.querySelectorAll('.service-card');
       function updateActiveCard() {
         let closest = null;
@@ -836,8 +834,7 @@
         cards.forEach(card => card.classList.toggle('active', card === closest));
       }
       hScroll.addEventListener('scroll', updateActiveCard, { passive: true });
-      window.addEventListener('scroll', updateActiveCard, { passive: true });
-      setTimeout(updateActiveCard, 100);
+      setTimeout(updateActiveCard, 150);
     }
 
     // Language switcher
