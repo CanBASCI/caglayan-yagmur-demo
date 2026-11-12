@@ -54,10 +54,10 @@
       transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     nav.scrolled {
-      background: rgba(248, 245, 240, 0.92);
-      backdrop-filter: blur(32px);
-      padding: 1rem 6vw;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.04);
+      background: rgba(248, 245, 240, 0.97);
+      backdrop-filter: blur(24px);
+      padding: 0.9rem 6vw;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
     }
     .logo {
       display: flex;
@@ -65,9 +65,9 @@
       text-decoration: none;
     }
     .logo img {
-      height: 42px;
+      height: 40px;
       width: auto;
-      transition: opacity 0.4s;
+      transition: opacity 0.3s;
     }
     .logo .logo-dark { display: none; }
     nav.scrolled .logo .logo-white { display: none; }
@@ -601,11 +601,15 @@
       progress.style.width = scrolled + '%';
     });
 
-    // Nav scroll
+    // Nav + logo switch (more reliable)
     const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
+    function updateNav() {
+      const scrolled = window.scrollY > 40;
+      nav.classList.toggle('scrolled', scrolled);
+    }
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('resize', updateNav);
 
     // Hero zoom on scroll
     const heroBg = document.querySelector('.hero-bg');
