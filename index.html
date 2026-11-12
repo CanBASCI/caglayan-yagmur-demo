@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doç. Dr. Çağlayan YAĞMUR | Plastik ve Estetik Cerrahi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold: #c9a962; --cream: #faf8f5; --dark: #1a1a1a; --text: #3a3a3a; --muted: #6b6b6b; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s; }
+    nav.scrolled { background: rgba(250,248,245,0.95); backdrop-filter: blur(20px); padding: 1rem 4rem; box-shadow: 0 2px 30px rgba(0,0,0,0.05); }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; letter-spacing: 0.15em; color: white; }
+    nav.scrolled .logo { color: var(--dark); }
+    .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; }
+    .hero-bg { position: absolute; inset: 0; background: url('https://caglayanyagmur.com.tr/storage/2026/03/manset-1-1.jpg') center/cover; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); }
+    .hero-content { position: relative; z-index: 2; text-align: center; color: white; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 300; }
+    section { padding: 6rem 4rem; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .service-block { display: grid; grid-template-columns: 1.2fr 1fr; min-height: 70vh; }
+    .service-image img { width: 100%; height: 100%; object-fit: cover; }
+    .contact { background: #1a1a1a; color: white; text-align: center; padding: 6rem 2rem; }
+    .phone-large { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: #c9a962; text-decoration: none; }
+    @media (max-width: 768px) { .about, .service-block { grid-template-columns: 1fr; } nav { padding: 1rem; } }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Ç. YAĞMUR</a>
+  </nav>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p>Samsun Estetik Cerrahi</p>
+      <h1>Doç. Dr.<br><em>Çağlayan YAĞMUR</em></h1>
+      <p>Plastik, Rekonstrüktif ve Estetik Cerrahi</p>
+      <a href="tel:+905447947475" style="background:#c9a962;color:white;padding:1rem 2rem;border-radius:50px;text-decoration:none;display:inline-block;margin-top:1rem;">Randevu Alın</a>
+    </div>
+  </section>
+  <section class="about">
+    <div><img src="https://caglayanyagmur.com.tr/storage/2026/02/doc-dr-caglayan-yagmur.jpg" style="width:100%;height:500px;object-fit:cover;" alt="Doctor"></div>
+    <div>
+      <h2 class="section-title">Deneyim ve Uzmanlık</h2>
+      <p>1976 yılında Kayseri’de doğan Doç. Dr. Çağlayan Yağmur, 2002 yılında Marmara Üniversitesi İngilizce Tıp Fakültesi’nden mezun olmuştur. 2019’dan bu yana Samsun’daki özel muayenehanesinde hastalarını kabul etmektedir.</p>
+    </div>
+  </section>
+  <section id="hizmetler">
+    <h2 class="section-title" style="text-align:center;">Hizmetler</h2>
+    <div class="service-block">
+      <div class="service-image"><img src="https://caglayanyagmur.com.tr/storage/2026/03/burun-estetigi-rinoplasti-samsun.jpg" alt="Burun"></div>
+      <div style="padding:3rem;display:flex;flex-direction:column;justify-content:center;">
+        <h2>Burun Estetiği</h2>
+        <p>Yüz oranlarına uyumlu, doğal görünümlü sonuçlar hedeflenerek kişiye özel rinoplasti planlaması yapılır.</p>
+      </div>
+    </div>
+    <div class="service-block" style="grid-template-columns:1fr 1.2fr;">
+      <div style="padding:3rem;display:flex;flex-direction:column;justify-content:center;"><h2>Meme Estetiği</h2><p>Meme büyütme, küçültme ve dikleştirme işlemleriyle beden oranlarına uyumlu, estetik bir form oluşturmayı amaçlıyoruz.</p></div>
+      <div class="service-image"><img src="https://caglayanyagmur.com.tr/storage/2026/03/meme-estetigi.jpg" alt="Meme"></div>
+    </div>
+  </section>
+  <section class="contact">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:3rem;">Randevu Alın</h2>
+    <a href="tel:+905447947475" class="phone-large">+90 544 794 74 75</a>
+    <p style="margin-top:1rem;opacity:0.7;">Körfez Mah. Atatürk 5. Kısım Bulvarı, Atakum, Samsun</p>
+  </section>
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+</body>
+</html>
