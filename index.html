@@ -167,15 +167,18 @@
     .hero-slide {
       position: absolute;
       inset: 0;
-      background-size: cover;
-      background-position: center;
+      background-size: cover !important;
+      background-position: center center !important;
       opacity: 0;
-      transition: opacity 1.4s ease-in-out;
-      transform: none;
+      transition: opacity 1.2s ease-in-out;
+      transform: none !important;
+      animation: none !important;
+      will-change: opacity;
     }
     .hero-slide.active {
       opacity: 1;
-      animation: none;
+      transform: none !important;
+      animation: none !important;
     }
     .hero-dots {
       position: absolute;
@@ -740,9 +743,14 @@
     let touchEndX = 0;
 
     function goToSlide(index) {
-      slides.forEach(s => s.classList.remove('active'));
+      slides.forEach(s => {
+        s.classList.remove('active');
+        s.style.transform = 'none';
+        s.style.animation = 'none';
+      });
       dots.forEach(d => d.classList.remove('active'));
       slides[index].classList.add('active');
+      slides[index].style.transform = 'none';
       dots[index].classList.add('active');
       currentSlide = index;
     }
