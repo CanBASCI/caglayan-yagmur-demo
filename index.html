@@ -32,6 +32,7 @@
       font-family: 'Outfit', system-ui, sans-serif;
       background: var(--cream);
       color: var(--text);
+      transform: none;
     }
 
     /* Progress */
@@ -45,24 +46,21 @@
       transition: width 0.08s linear;
     }
 
-    /* Nav */
+    /* Nav - always a real bar */
     nav {
-      position: fixed !important;
+      position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      padding: 1.2rem 6vw;
+      padding: 1rem 6vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
       background: transparent;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
     }
     nav.scrolled {
-      background: rgba(248, 245, 240, 0.98) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: 0.75rem 6vw;
-      box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+      background: #f8f5f0;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
     }
     .logo {
       display: flex;
@@ -70,14 +68,14 @@
       text-decoration: none;
     }
     .logo img {
-      height: 34px;
+      height: 32px;
       width: auto;
       display: block;
     }
     .logo-white { display: block; }
     .logo-dark { display: none; }
-    nav.scrolled .logo-white { display: none !important; }
-    nav.scrolled .logo-dark { display: block !important; }
+    nav.scrolled .logo-white { display: none; }
+    nav.scrolled .logo-dark { display: block; }
     .nav-links {
       display: flex;
       gap: 2.8rem;
@@ -441,8 +439,8 @@
 
     /* Mobile */
     @media (max-width: 1024px) {
-      nav { padding: 1.0rem 4vw; }
-      nav.scrolled { padding: 0.7rem 4vw; }
+      nav { padding: 0.9rem 4vw; }
+      nav.scrolled { padding: 0.65rem 4vw; }
       .nav-links { display: none; }
       section { padding: 6rem 4vw; }
       .about { grid-template-columns: 1fr; gap: 3rem; }
@@ -623,21 +621,14 @@
     setTimeout(adjustHero, 150);
     window.addEventListener('resize', adjustHero);
 
-    // Nav + logo switch
+    // Nav
     const nav = document.getElementById('nav');
     function updateNav() {
-      if (!nav) return;
-      const y = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-      if (y > 10) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      nav.classList.toggle('scrolled', y > 8);
     }
-    updateNav();
     window.addEventListener('scroll', updateNav, { passive: true });
-    window.addEventListener('touchmove', updateNav, { passive: true });
-    document.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
 
     // Hero zoom on scroll
     const heroBg = document.querySelector('.hero-bg');
