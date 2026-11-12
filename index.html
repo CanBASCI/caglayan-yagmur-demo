@@ -170,15 +170,15 @@
       background-position: center;
       opacity: 0;
       transition: opacity 1.6s ease-in-out;
-      transform: scale(1.08);
+      transform: scale(1.06);
     }
     .hero-slide.active {
       opacity: 1;
-      animation: heroKen 12s ease-out forwards;
+      animation: heroKen 9s ease-out forwards;
     }
     @keyframes heroKen {
-      from { transform: scale(1.12); }
-      to { transform: scale(1.04); }
+      from { transform: scale(1.1); }
+      to { transform: scale(1.03); }
     }
     .hero-dots {
       position: absolute;
@@ -743,10 +743,12 @@
         s.style.animation = 'none';
       });
       dots.forEach(d => d.classList.remove('active'));
-      void slides[index].offsetWidth;
-      slides[index].classList.add('active');
-      dots[index].classList.add('active');
-      currentSlide = index;
+      requestAnimationFrame(() => {
+        slides[index].style.animation = '';
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+      });
     }
 
     dots.forEach(dot => {
