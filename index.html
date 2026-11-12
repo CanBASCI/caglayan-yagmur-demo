@@ -123,11 +123,16 @@
       background-size: cover;
       background-position: center;
       opacity: 0;
-      transition: opacity 1.2s ease;
-      transform: scale(1.15);
+      transition: opacity 1s ease;
+      transform: scale(1.2);
     }
     .hero-slide.active {
       opacity: 1;
+      animation: heroKen 8s ease-out forwards;
+    }
+    @keyframes heroKen {
+      from { transform: scale(1.25); }
+      to { transform: scale(1.05); }
     }
     .hero-dots {
       position: absolute;
@@ -653,10 +658,14 @@
     window.addEventListener('touchmove', updateNav, { passive: true });
     updateNav();
 
-    // Hero slider
+    // Hero slider + swipe
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
+    const heroEl = document.querySelector('.hero');
     let currentSlide = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
     function goToSlide(index) {
       slides.forEach(s => s.classList.remove('active'));
       dots.forEach(d => d.classList.remove('active'));
@@ -664,12 +673,32 @@
       dots[index].classList.add('active');
       currentSlide = index;
     }
+
     dots.forEach(dot => {
       dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.index)));
     });
+
     setInterval(() => {
       goToSlide((currentSlide + 1) % slides.length);
-    }, 5000);
+    }, 6000);
+
+    // Touch swipe
+    if (heroEl) {
+      heroEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      heroEl.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            goToSlide((currentSlide + 1) % slides.length);
+          } else {
+            goToSlide((currentSlide - 1 + slides.length) % slides.length);
+          }
+        }
+      }, { passive: true });
+    }
 
     // About image parallax
     const aboutImg = document.querySelector('.about-img img');
