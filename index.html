@@ -8,72 +8,678 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root { --gold: #c9a962; --cream: #faf8f5; --dark: #1a1a1a; --text: #3a3a3a; --muted: #6b6b6b; }
+    :root {
+      --gold: #c9a962;
+      --gold-light: #e8d5a3;
+      --cream: #faf8f5;
+      --dark: #1a1a1a;
+      --charcoal: #2c2c2c;
+      --text: #3a3a3a;
+      --muted: #6b6b6b;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s; }
-    nav.scrolled { background: rgba(250,248,245,0.95); backdrop-filter: blur(20px); padding: 1rem 4rem; box-shadow: 0 2px 30px rgba(0,0,0,0.05); }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; letter-spacing: 0.15em; color: white; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    .serif { font-family: 'Cormorant Garamond', serif; }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(250, 248, 245, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 4rem;
+      box-shadow: 0 2px 30px rgba(0,0,0,0.05);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: white;
+      transition: color 0.3s;
+    }
     nav.scrolled .logo { color: var(--dark); }
-    .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; }
-    .hero-bg { position: absolute; inset: 0; background: url('https://caglayanyagmur.com.tr/storage/2026/03/manset-1-1.jpg') center/cover; }
-    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); }
-    .hero-content { position: relative; z-index: 2; text-align: center; color: white; }
-    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 300; }
-    section { padding: 6rem 4rem; }
-    .section-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; }
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .service-block { display: grid; grid-template-columns: 1.2fr 1fr; min-height: 70vh; }
-    .service-image img { width: 100%; height: 100%; object-fit: cover; }
-    .contact { background: #1a1a1a; color: white; text-align: center; padding: 6rem 2rem; }
-    .phone-large { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: #c9a962; text-decoration: none; }
-    @media (max-width: 768px) { .about, .service-block { grid-template-columns: 1fr; } nav { padding: 1rem; } }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--dark); }
+    .nav-links a:hover { color: var(--gold); }
+    .cta-btn {
+      background: var(--gold);
+      color: white !important;
+      padding: 0.75rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .cta-btn:hover { background: #b8944d; }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://caglayanyagmur.com.tr/storage/2026/03/manset-1-1.jpg') center/cover no-repeat;
+      transform: scale(1.1);
+      transition: transform 8s ease-out;
+    }
+    .hero:hover .hero-bg { transform: scale(1); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.7) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 900px;
+      padding: 0 2rem;
+    }
+    .hero-subtitle {
+      font-size: 0.9rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s forwards;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.9s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: all 0.3s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,169,98,0.4); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.5);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background: white; color: var(--dark); }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      animation: bounce 2s infinite;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Sections */
+    section { padding: 8rem 4rem; }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* About */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-image {
+      position: relative;
+    }
+    .about-image img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      border-radius: 0;
+    }
+    .about-image::before {
+      content: '';
+      position: absolute;
+      top: -20px; left: -20px;
+      width: 100%; height: 100%;
+      border: 1px solid var(--gold);
+      z-index: -1;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .credentials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .credential {
+      padding: 1.5rem;
+      background: white;
+      border-left: 2px solid var(--gold);
+    }
+    .credential h4 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .credential p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Values */
+    .values {
+      background: var(--dark);
+      color: white;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .value-card {
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.4s;
+    }
+    .value-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+    }
+    .value-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .value-card h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+    .value-card p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    /* Services */
+    .services-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 5rem;
+    }
+    .service-block {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      min-height: 80vh;
+      margin-bottom: 2px;
+    }
+    .service-block.reverse { grid-template-columns: 1fr 1.2fr; }
+    .service-block.reverse .service-image { order: 2; }
+    .service-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .service-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .service-block:hover .service-image img { transform: scale(1.08); }
+    .service-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem;
+      background: white;
+    }
+    .service-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+    .service-content p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .service-link {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+    .service-link:hover { gap: 1rem; }
+
+    /* Process */
+    .process {
+      background: linear-gradient(180deg, var(--cream) 0%, #f0ebe3 100%);
+    }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.3;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+    }
+    .step-number {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      position: relative;
+      z-index: 1;
+    }
+    .step h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+    .step p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Contact */
+    .contact {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+    }
+    .contact h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .contact p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2rem;
+    }
+    .phone-large {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 2rem;
+    }
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Footer */
+    footer {
+      background: #111;
+      color: rgba(255,255,255,0.5);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      nav { padding: 1.2rem 2rem; }
+      section { padding: 5rem 2rem; }
+      .about, .service-block, .service-block.reverse { grid-template-columns: 1fr; }
+      .service-block.reverse .service-image { order: 0; }
+      .service-content { padding: 3rem 2rem; }
+      .values-grid, .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 3rem; }
+      .values-grid, .process-steps { grid-template-columns: 1fr; }
+      .credentials { grid-template-columns: 1fr; }
+      .contact-info { flex-direction: column; gap: 1rem; }
+      .phone-large { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
   <nav id="nav">
     <a href="#" class="logo">Ç. YAĞMUR</a>
+    <ul class="nav-links">
+      <li><a href="#hakkimda">Hakkımda</a></li>
+      <li><a href="#hizmetler">Hizmetler</a></li>
+      <li><a href="#surec">Süreç</a></li>
+      <li><a href="#iletisim" class="cta-btn">Randevu</a></li>
+    </ul>
   </nav>
+
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p>Samsun Estetik Cerrahi</p>
+      <p class="hero-subtitle">Samsun Estetik Cerrahi</p>
       <h1>Doç. Dr.<br><em>Çağlayan YAĞMUR</em></h1>
-      <p>Plastik, Rekonstrüktif ve Estetik Cerrahi</p>
-      <a href="tel:+905447947475" style="background:#c9a962;color:white;padding:1rem 2rem;border-radius:50px;text-decoration:none;display:inline-block;margin-top:1rem;">Randevu Alın</a>
-    </div>
-  </section>
-  <section class="about">
-    <div><img src="https://caglayanyagmur.com.tr/storage/2026/02/doc-dr-caglayan-yagmur.jpg" style="width:100%;height:500px;object-fit:cover;" alt="Doctor"></div>
-    <div>
-      <h2 class="section-title">Deneyim ve Uzmanlık</h2>
-      <p>1976 yılında Kayseri’de doğan Doç. Dr. Çağlayan Yağmur, 2002 yılında Marmara Üniversitesi İngilizce Tıp Fakültesi’nden mezun olmuştur. 2019’dan bu yana Samsun’daki özel muayenehanesinde hastalarını kabul etmektedir.</p>
-    </div>
-  </section>
-  <section id="hizmetler">
-    <h2 class="section-title" style="text-align:center;">Hizmetler</h2>
-    <div class="service-block">
-      <div class="service-image"><img src="https://caglayanyagmur.com.tr/storage/2026/03/burun-estetigi-rinoplasti-samsun.jpg" alt="Burun"></div>
-      <div style="padding:3rem;display:flex;flex-direction:column;justify-content:center;">
-        <h2>Burun Estetiği</h2>
-        <p>Yüz oranlarına uyumlu, doğal görünümlü sonuçlar hedeflenerek kişiye özel rinoplasti planlaması yapılır.</p>
+      <p class="hero-desc">Plastik, Rekonstrüktif ve Estetik Cerrahi<br>Doğal ve dengeli sonuçlar için kişiye özel yaklaşım</p>
+      <div class="hero-buttons">
+        <a href="tel:+905447947475" class="btn-primary">Randevu Alın</a>
+        <a href="#hizmetler" class="btn-outline">Hizmetler</a>
       </div>
     </div>
-    <div class="service-block" style="grid-template-columns:1fr 1.2fr;">
-      <div style="padding:3rem;display:flex;flex-direction:column;justify-content:center;"><h2>Meme Estetiği</h2><p>Meme büyütme, küçültme ve dikleştirme işlemleriyle beden oranlarına uyumlu, estetik bir form oluşturmayı amaçlıyoruz.</p></div>
-      <div class="service-image"><img src="https://caglayanyagmur.com.tr/storage/2026/03/meme-estetigi.jpg" alt="Meme"></div>
+    <div class="scroll-indicator">Aşağı Kaydırın</div>
+  </section>
+
+  <section id="hakkimda" class="about">
+    <div class="about-image reveal">
+      <img src="https://caglayanyagmur.com.tr/storage/2026/02/doc-dr-caglayan-yagmur.jpg" alt="Doç. Dr. Çağlayan Yağmur">
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">Hakkımda</p>
+      <h2 class="section-title">Deneyim ve<br>Uzmanlık</h2>
+      <p>1976 yılında Kayseri’de doğan Doç. Dr. Çağlayan Yağmur, 2002 yılında Marmara Üniversitesi İngilizce Tıp Fakültesi’nden mezun olmuştur. Uzmanlık eğitimini Plastik Rekonstrüktif ve Estetik Cerrahi alanında tamamlamıştır.</p>
+      <p>2019’dan bu yana Samsun’daki özel muayenehanesinde hastalarını kabul eden Doç. Dr. Çağlayan Yağmur, modern teknikler ve güncel bilimsel yaklaşımlarla değerlendirmelerini sürdürmektedir.</p>
+      <div class="credentials">
+        <div class="credential">
+          <h4>Türk Board Sertifikası</h4>
+          <p>2009'dan beri Yeterlik Belgesi sahibi</p>
+        </div>
+        <div class="credential">
+          <h4>Avrupa Board</h4>
+          <p>Fellow of European Board of Plastic Surgery</p>
+        </div>
+        <div class="credential">
+          <h4>Doçentlik</h4>
+          <p>2018 yılında ünvanını aldı</p>
+        </div>
+        <div class="credential">
+          <h4>Uluslararası Deneyim</h4>
+          <p>Tokyo'da Nippon Medical School</p>
+        </div>
+      </div>
     </div>
   </section>
-  <section class="contact">
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:3rem;">Randevu Alın</h2>
-    <a href="tel:+905447947475" class="phone-large">+90 544 794 74 75</a>
-    <p style="margin-top:1rem;opacity:0.7;">Körfez Mah. Atatürk 5. Kısım Bulvarı, Atakum, Samsun</p>
+
+  <section class="values">
+    <div style="max-width: 1400px; margin: 0 auto;">
+      <p class="section-label reveal" style="color: var(--gold);">Yaklaşımımız</p>
+      <h2 class="section-title reveal" style="color: white;">Güven ve Doğallık<br>Temelinde</h2>
+      <div class="values-grid">
+        <div class="value-card reveal">
+          <div class="value-number">01</div>
+          <h3>Detaylı Ön Değerlendirme</h3>
+          <p>Hedefleri ve süreci netleştiririz. Kişisel beklentilerinizi dinler, anatomik özelliklerinize göre planlarız.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-number">02</div>
+          <h3>Doğal ve Dengeli Sonuç</h3>
+          <p>Doğal yüz ve vücut uyumu yaklaşımı. Yapay olmayan, size ait hissettiren sonuçlar hedefleriz.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-number">03</div>
+          <h3>Güvenli Süreç Yönetimi</h3>
+          <p>Bilgilendirme ve takip adımlarıyla. Her aşamada şeffaf ve planlı ilerleriz.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-number">04</div>
+          <h3>Şeffaf İletişim</h3>
+          <p>Aklınızdaki soruları birlikte yanıtlarız. Karar sürecinizde yanınızdayız.</p>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <section id="hizmetler">
+    <div class="services-header reveal">
+      <p class="section-label">Uzmanlık Alanları</p>
+      <h2 class="section-title">Cerrahi Estetik<br>İşlemler</h2>
+      <p style="color: var(--muted); font-size: 1.05rem; line-height: 1.7;">Kliniğimiz; Burun Estetiği, Meme Estetiği ve Yüz Estetiği alanlarında modern tekniklerle kişiye özel çözümler sunar. Doğal, güvenli ve estetik sonuçlar için uzman ekibimizle hizmet veriyoruz.</p>
+    </div>
+
+    <div class="service-block reveal">
+      <div class="service-image">
+        <img src="https://caglayanyagmur.com.tr/storage/2026/03/burun-estetigi-rinoplasti-samsun.jpg" alt="Burun Estetiği">
+      </div>
+      <div class="service-content">
+        <p class="section-label">Rinoplasti</p>
+        <h2>Burun Estetiği</h2>
+        <p>Yüz oranlarına uyumlu, doğal görünümlü sonuçlar hedeflenerek kişiye özel rinoplasti planlaması yapılır. Muayene sürecinde kişisel ihtiyaçlara göre tasarım oluşturulur; güvenli operasyon aşamaları ve konforlu bir iyileşme süreci ön planda tutulur.</p>
+        <a href="tel:+905447947475" class="service-link">Randevu Alın →</a>
+      </div>
+    </div>
+
+    <div class="service-block reverse reveal">
+      <div class="service-image">
+        <img src="https://caglayanyagmur.com.tr/storage/2026/03/meme-estetigi.jpg" alt="Meme Estetiği">
+      </div>
+      <div class="service-content">
+        <p class="section-label">Meme</p>
+        <h2>Meme Estetiği</h2>
+        <p>Meme büyütme, küçültme ve dikleştirme işlemleriyle beden oranlarına uyumlu, estetik bir form oluşturmayı amaçlıyoruz. Tedavi planı; kişisel beklentiler, anatomik özellikler ve güvenlik kriterleri göz önünde bulundurularak titizlikle hazırlanır.</p>
+        <a href="tel:+905447947475" class="service-link">Randevu Alın →</a>
+      </div>
+    </div>
+
+    <div class="service-block reveal">
+      <div class="service-image">
+        <img src="https://caglayanyagmur.com.tr/storage/2026/04/yuz-estetigi-samsun.jpg" alt="Yüz Estetiği">
+      </div>
+      <div class="service-content">
+        <p class="section-label">Yüz</p>
+        <h2>Yüz Estetiği</h2>
+        <p>Göz kapağı ve yüz estetiğinde hedef; daha dinlenmiş, dengeli ve yüz ifadesiyle uyum içinde doğal bir görünüm elde etmektir. Kişiye özel planlama ile yüz hatlarınızın güzelliğini öne çıkarıyoruz.</p>
+        <a href="tel:+905447947475" class="service-link">Randevu Alın →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="surec" class="process">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <p class="section-label reveal">Süreç & Bilgilendirme</p>
+      <h2 class="section-title reveal">4 Adımda Planlı ve<br>Güvenli Süreç</h2>
+      <p class="reveal" style="color: var(--muted); max-width: 600px; margin: 0 auto;">İlk görüşmeden kontrol randevularına kadar; her aşama planlı, şeffaf ve kişiye özel şekilde ilerler.</p>
+      
+      <div class="process-steps">
+        <div class="step reveal">
+          <div class="step-number">01</div>
+          <h3>İlk Görüşme & Beklenti Analizi</h3>
+          <p>Şikâyet ve istekler değerlendirilir; yüz ve vücut oranlarına göre kişiye özel hedefler belirlenir.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-number">02</div>
+          <h3>Muayene & Kişisel Planlama</h3>
+          <p>Uygulanacak yöntemler, süreç detayları ve ihtiyaçlar netleştirilerek kişiye özel bir plan oluşturulur.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-number">03</div>
+          <h3>Operasyon / Uygulama</h3>
+          <p>Belirlenen işlem güvenli koşullarda gerçekleştirilir ve süreç boyunca bilgilendirme adımları devam eder.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-number">04</div>
+          <h3>İyileşme & Kontroller</h3>
+          <p>Kontrol randevuları, bakım önerileri ve süreç takibiyle iyileşme süreci güvenle desteklenir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="iletisim" class="contact">
+    <p class="section-label reveal" style="color: var(--gold);">İletişim</p>
+    <h2 class="reveal">Randevu Alın</h2>
+    <p class="reveal">Detaylı bilgi ve randevu için bize ulaşın</p>
+    <a href="tel:+905447947475" class="phone-large reveal">+90 544 794 74 75</a>
+    <div class="contact-info reveal">
+      <div>
+        <strong>Adres</strong><br>
+        Körfez Mah. Atatürk 5. Kısım Bulvarı<br>
+        112/1 Türköz Marin Ofis<br>
+        Atakum, Samsun
+      </div>
+      <div>
+        <strong>Çalışma Saatleri</strong><br>
+        Pzt - Cum: 09:00 - 19:00<br>
+        Cumartesi: 09:00 - 14:00<br>
+        Pazar: Kapalı
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Doç. Dr. Çağlayan YAĞMUR</span>
+    <span>Plastik, Rekonstrüktif ve Estetik Cerrahi</span>
+  </footer>
+
   <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
-      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // Staggered animation delay
+    document.querySelectorAll('.values-grid .reveal, .process-steps .reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.1}s`;
     });
   </script>
 </body>
