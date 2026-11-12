@@ -46,21 +46,21 @@
       transition: width 0.08s linear;
     }
 
-    /* Nav - always a real bar */
+    /* Nav */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      padding: 1rem 6vw;
+      padding: 0.85rem 6vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: transparent;
+      background: rgba(248, 245, 240, 0.0);
       transition: background 0.25s ease, box-shadow 0.25s ease;
     }
     nav.scrolled {
       background: #f8f5f0;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.1);
     }
     .logo {
       display: flex;
@@ -68,14 +68,13 @@
       text-decoration: none;
     }
     .logo img {
-      height: 32px;
+      height: 30px;
       width: auto;
-      display: block;
     }
     .logo-white { display: block; }
     .logo-dark { display: none; }
-    nav.scrolled .logo-white { display: none; }
-    nav.scrolled .logo-dark { display: block; }
+    nav.scrolled .logo-white { display: none !important; }
+    nav.scrolled .logo-dark { display: block !important; }
     .nav-links {
       display: flex;
       gap: 2.8rem;
@@ -316,19 +315,15 @@
       position: relative;
       overflow: hidden;
       border-radius: 6px;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .service-card img {
       width: 100%;
       height: 70vh;
       object-fit: cover;
-      transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s;
-      will-change: transform;
+      transition: transform 0.5s ease;
     }
-    .service-card:hover img,
     .service-card.active img {
-      transform: scale(1.08);
-      filter: brightness(1.08);
+      transform: scale(1.06);
     }
     .service-card .overlay {
       position: absolute;
@@ -439,8 +434,8 @@
 
     /* Mobile */
     @media (max-width: 1024px) {
-      nav { padding: 0.9rem 4vw; }
-      nav.scrolled { padding: 0.65rem 4vw; }
+      nav { padding: 0.75rem 4vw; }
+      nav.scrolled { padding: 0.6rem 4vw; }
       .nav-links { display: none; }
       section { padding: 6rem 4vw; }
       .about { grid-template-columns: 1fr; gap: 3rem; }
@@ -624,10 +619,12 @@
     // Nav
     const nav = document.getElementById('nav');
     function updateNav() {
-      const y = window.scrollY || document.documentElement.scrollTop || 0;
-      nav.classList.toggle('scrolled', y > 8);
+      const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      nav.classList.toggle('scrolled', y > 5);
     }
     window.addEventListener('scroll', updateNav, { passive: true });
+    document.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('touchmove', updateNav, { passive: true });
     updateNav();
 
     // Hero zoom on scroll
@@ -676,7 +673,8 @@
           const center = window.innerWidth / 2;
           const cardCenter = cardRect.left + cardRect.width / 2;
           const dist = Math.abs(center - cardCenter);
-          card.classList.toggle('active', dist < cardRect.width * 0.4);
+          const isActive = dist < cardRect.width * 0.35;
+          card.classList.toggle('active', isActive);
         });
       }, { passive: true });
     }
