@@ -47,22 +47,22 @@
 
     /* Nav */
     nav {
-      position: fixed;
+      position: fixed !important;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      padding: 1.3rem 6vw;
+      padding: 1.2rem 6vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
       background: transparent;
     }
     nav.scrolled {
-      background: rgba(248, 245, 240, 0.97);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 0.8rem 6vw;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+      background: rgba(248, 245, 240, 0.98) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 0.75rem 6vw;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.08);
     }
     .logo {
       display: flex;
@@ -70,13 +70,14 @@
       text-decoration: none;
     }
     .logo img {
-      height: 36px;
+      height: 34px;
       width: auto;
       display: block;
     }
-    .logo .logo-dark { display: none; }
-    nav.scrolled .logo .logo-white { display: none; }
-    nav.scrolled .logo .logo-dark { display: block; }
+    .logo-white { display: block; }
+    .logo-dark { display: none; }
+    nav.scrolled .logo-white { display: none !important; }
+    nav.scrolled .logo-dark { display: block !important; }
     .nav-links {
       display: flex;
       gap: 2.8rem;
@@ -440,8 +441,8 @@
 
     /* Mobile */
     @media (max-width: 1024px) {
-      nav { padding: 1.1rem 4vw; }
-      nav.scrolled { padding: 0.75rem 4vw; }
+      nav { padding: 1.0rem 4vw; }
+      nav.scrolled { padding: 0.7rem 4vw; }
       .nav-links { display: none; }
       section { padding: 6rem 4vw; }
       .about { grid-template-columns: 1fr; gap: 3rem; }
@@ -610,7 +611,7 @@
       progress.style.width = scrolled + '%';
     });
 
-    // Gentle hero height fix (only if significantly off)
+    // Gentle hero height fix
     function adjustHero() {
       const hero = document.querySelector('.hero');
       if (!hero) return;
@@ -622,16 +623,21 @@
     setTimeout(adjustHero, 150);
     window.addEventListener('resize', adjustHero);
 
-    // Nav + logo switch (more reliable)
+    // Nav + logo switch
     const nav = document.getElementById('nav');
     function updateNav() {
       if (!nav) return;
-      const y = window.scrollY || document.documentElement.scrollTop;
-      nav.classList.toggle('scrolled', y > 20);
+      const y = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+      if (y > 10) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
     }
     updateNav();
     window.addEventListener('scroll', updateNav, { passive: true });
     window.addEventListener('touchmove', updateNav, { passive: true });
+    document.addEventListener('scroll', updateNav, { passive: true });
 
     // Hero zoom on scroll
     const heroBg = document.querySelector('.hero-bg');
@@ -664,7 +670,7 @@
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-    // Horizontal gallery more cinematic
+    // Horizontal gallery
     const hScroll = document.querySelector('.h-scroll');
     if (hScroll) {
       const cards = hScroll.querySelectorAll('.service-card');
