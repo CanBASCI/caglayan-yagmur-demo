@@ -115,10 +115,15 @@
     }
     .hero-bg {
       position: absolute;
-      inset: -30%;
+      inset: -20%;
       background: url('https://caglayanyagmur.com.tr/storage/2026/03/manset-1-1.jpg') center/cover no-repeat;
-      transform: scale(1.4);
+      transform: scale(1.25);
       will-change: transform;
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.35); }
+      to { transform: scale(1.1); }
     }
     .hero-overlay {
       position: absolute;
@@ -627,15 +632,16 @@
     window.addEventListener('touchmove', updateNav, { passive: true });
     updateNav();
 
-    // Hero zoom on scroll
+    // Hero zoom on scroll (stronger)
     const heroBg = document.querySelector('.hero-bg');
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
-      if (y < window.innerHeight) {
-        const scale = 1.4 - (y / window.innerHeight) * 0.4;
+      if (y < window.innerHeight * 1.2) {
+        const progress = y / window.innerHeight;
+        const scale = 1.25 - progress * 0.35;
         heroBg.style.transform = `scale(${Math.max(1, scale)})`;
       }
-    });
+    }, { passive: true });
 
     // About image parallax
     const aboutImg = document.querySelector('.about-img img');
