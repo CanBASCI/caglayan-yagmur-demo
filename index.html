@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Doç. Dr. Çağlayan YAĞMUR | Plastik ve Estetik Cerrahi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -617,7 +620,6 @@
     setHeroHeight();
     window.addEventListener('resize', setHeroHeight);
     window.addEventListener('orientationchange', setHeroHeight);
-    // Extra call after load for some browsers
     window.addEventListener('load', setHeroHeight);
 
     // Nav + logo switch
@@ -670,7 +672,6 @@
           const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.55 - rect.top) / (window.innerHeight * 0.9)));
           hScroll.scrollLeft = progress * (hScroll.scrollWidth - hScroll.clientWidth) * 1.15;
         }
-        // Highlight center card
         cards.forEach(card => {
           const cardRect = card.getBoundingClientRect();
           const center = window.innerWidth / 2;
