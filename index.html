@@ -106,7 +106,7 @@
       min-height: 100vh;
       position: relative;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
       overflow: hidden;
     }
@@ -127,7 +127,7 @@
       z-index: 2;
       text-align: center;
       color: white;
-      padding: 0 5vw 12vh;
+      padding: 0 5vw;
       max-width: 1100px;
     }
     .hero-kicker {
@@ -605,16 +605,20 @@
       progress.style.width = scrolled + '%';
     });
 
-    // Fix hero height for mobile browsers (iOS Safari address bar)
+    // Fix hero height for all mobile browsers
     function setHeroHeight() {
       const hero = document.querySelector('.hero');
       if (hero) {
-        hero.style.height = window.innerHeight + 'px';
+        const h = window.innerHeight;
+        hero.style.height = h + 'px';
+        hero.style.minHeight = h + 'px';
       }
     }
     setHeroHeight();
     window.addEventListener('resize', setHeroHeight);
     window.addEventListener('orientationchange', setHeroHeight);
+    // Extra call after load for some browsers
+    window.addEventListener('load', setHeroHeight);
 
     // Nav + logo switch
     const nav = document.getElementById('nav');
