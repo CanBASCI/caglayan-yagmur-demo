@@ -382,32 +382,30 @@
       position: relative;
       overflow: hidden;
       border-radius: 6px;
+      isolation: isolate;
     }
     .service-card img {
       width: 100%;
       height: 70vh;
       object-fit: cover;
-      transition: transform 0.6s ease;
+      transition: transform 0.5s ease;
       transform-origin: center center;
     }
     .service-card.active img {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
     .service-card .overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 2.2rem 2.5rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 65%);
+      padding: 4rem 2rem 1.8rem;
       opacity: 1 !important;
       visibility: visible !important;
       pointer-events: none;
-      z-index: 5;
-      transform: none !important;
+      z-index: 20;
+      transform: translate3d(0,0,0);
     }
     .service-card h3,
     .service-card p {
@@ -798,42 +796,33 @@
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-    // Horizontal gallery - scale image only, text locked visible
+    // Horizontal gallery - image scale only, text never flickers
     const hScroll = document.querySelector('.h-scroll');
     const servicesSection = document.querySelector('.services-wrap');
     if (hScroll && servicesSection) {
       const cards = hScroll.querySelectorAll('.service-card');
+      let rafId = null;
       function updateActiveCard() {
-        let closest = null;
-        let minDist = Infinity;
-        cards.forEach(card => {
-          const cardRect = card.getBoundingClientRect();
-          const center = window.innerWidth / 2;
-          const cardCenter = cardRect.left + cardRect.width / 2;
-          const dist = Math.abs(center - cardCenter);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = card;
-          }
-        });
-        cards.forEach(card => {
-          card.classList.toggle('active', card === closest);
-          const overlay = card.querySelector('.overlay');
-          if (overlay) {
-            overlay.style.opacity = '1';
-            overlay.style.visibility = 'visible';
-          }
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          let closest = null;
+          let minDist = Infinity;
+          cards.forEach(card => {
+            const r = card.getBoundingClientRect();
+            const dist = Math.abs((r.left + r.width / 2) - window.innerWidth / 2);
+            if (dist < minDist) { minDist = dist; closest = card; }
+          });
+          cards.forEach(card => card.classList.toggle('active', card === closest));
+          rafId = null;
         });
       }
-      const galleryObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) updateActiveCard();
-        });
-      }, { threshold: 0.1 });
-      galleryObserver.observe(servicesSection);
       hScroll.addEventListener('scroll', updateActiveCard, { passive: true });
       window.addEventListener('scroll', updateActiveCard, { passive: true });
-      setTimeout(updateActiveCard, 80);
+      const galleryObserver = new IntersectionObserver((entries) => {
+        if (entries.some(e => e.isIntersecting)) updateActiveCard();
+      }, { threshold: 0.05 });
+      galleryObserver.observe(servicesSection);
+      setTimeout(updateActiveCard, 50);
     }
 
     // Language switcher
